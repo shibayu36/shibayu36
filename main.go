@@ -15,7 +15,7 @@ type CLI struct {
 
 // Run method
 func (c *CLI) Run(args []string) int {
-	cl := cli.NewCLI("shibayu36", "0.0.1")
+	cl := cli.NewCLI("shibayu36", Version)
 	cl.Args = args[1:]
 
 	cl.Commands = map[string]cli.CommandFactory{
