@@ -1,9 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io"
+)
 
 // BlogCommand is CLI struct for `blog` sub-command
-type BlogCommand struct{}
+type BlogCommand struct {
+	OutStream, ErrStream io.Writer
+}
 
 // Synopsis is short-message
 func (c *BlogCommand) Synopsis() string {
@@ -17,6 +22,6 @@ func (c *BlogCommand) Help() string {
 
 // Run is main method
 func (c *BlogCommand) Run(args []string) int {
-	fmt.Printf("http://blog.shibayu36.org/\n")
+	fmt.Fprintln(c.OutStream, "http://blog.shibayu36.org/")
 	return 0
 }

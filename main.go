@@ -1,29 +1,42 @@
 package main
 
 import (
-	"log"
+	"fmt"
+	"io"
 	"os"
 
 	"github.com/mitchellh/cli"
 )
 
-func main() {
-	c := cli.NewCLI("shibayu36", "0.0.1")
-	c.Args = os.Args[1:]
+// CLI is struct for switch stdout / stderr
+type CLI struct {
+	outStream, errStream io.Writer
+}
 
-	c.Commands = map[string]cli.CommandFactory{
+// Run method
+func (c *CLI) Run(args []string) int {
+	cl := cli.NewCLI("shibayu36", "0.0.1")
+	cl.Args = args[1:]
+
+	cl.Commands = map[string]cli.CommandFactory{
 		"hello": func() (cli.Command, error) {
 			return &HelloCommand{}, nil
 		},
 		"blog": func() (cli.Command, error) {
-			return &BlogCommand{}, nil
+			return &BlogCommand{c.outStream, c.errStream}, nil
 		},
 	}
-	exitStatus, err := c.Run()
+
+	exitStatus, err := cl.Run()
 
 	if err != nil {
-		log.Println(err)
+		fmt.Fprintf(c.errStream, "Failed to execute: %s\n", err.Error())
 	}
 
-	os.Exit(exitStatus)
+	return exitStatus
+}
+
+func main() {
+	c := &CLI{outStream: os.Stdout, errStream: os.Stderr}
+	os.Exit(c.Run(os.Args))
 }
