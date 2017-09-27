@@ -1,9 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io"
+)
 
 // HelloCommand is CLI struct for `hello` sub-command
-type HelloCommand struct{}
+type HelloCommand struct{
+	OutStream, ErrStream io.Writer
+}
 
 // Synopsis is short-message
 func (c *HelloCommand) Synopsis() string {
@@ -18,9 +23,10 @@ func (c *HelloCommand) Help() string {
 // Run is main method
 func (c *HelloCommand) Run(args []string) int {
 	if len(args) == 0 {
-		fmt.Println("Please specify name")
+		fmt.Fprintln(c.ErrStream, "Please specify name")
 		return 1
 	}
-	fmt.Printf("Hello %s\n", args[0])
+
+	fmt.Fprintf(c.OutStream, "Hello %s\n", args[0])
 	return 0
 }

@@ -20,7 +20,7 @@ func (c *CLI) Run(args []string) int {
 
 	cl.Commands = map[string]cli.CommandFactory{
 		"hello": func() (cli.Command, error) {
-			return &HelloCommand{}, nil
+			return &HelloCommand{c.outStream, c.errStream}, nil
 		},
 		"blog": func() (cli.Command, error) {
 			return &BlogCommand{c.outStream, c.errStream}, nil
