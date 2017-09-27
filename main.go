@@ -15,6 +15,9 @@ func main() {
 		"hello": func() (cli.Command, error) {
 			return &HelloCommand{}, nil
 		},
+		"blog": func() (cli.Command, error) {
+			return &BlogCommand{}, nil
+		},
 	}
 	exitStatus, err := c.Run()
 
