@@ -1,5 +1,7 @@
 setup:
-	go get github.com/Masterminds/glide
+	go get -v \
+		github.com/Masterminds/glide \
+		github.com/mitchellh/gox
 
 deps: setup
 	glide install
@@ -7,4 +9,7 @@ deps: setup
 test: deps
 	go test -v $$(glide novendor)
 
-.PHONY: setup deps test
+xbuild: deps
+	gox -output "build/{{.Dir}}_{{.OS}}_{{.Arch}}/{{.Dir}}"
+
+.PHONY: setup deps test xbuild

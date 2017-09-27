@@ -21,3 +21,5 @@
 vendor/
 
 # End of https://www.gitignore.io/api/go
+
+/build/
