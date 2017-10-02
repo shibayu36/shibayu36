@@ -10,3 +10,8 @@ archive:
   format: zip
   files:
     - README.md
+release:
+  github:
+    owner: shibayu36
+    name: shibayu36
+  draft: true
