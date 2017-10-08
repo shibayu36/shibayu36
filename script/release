@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+# Usage: GITHUB_TOKEN=... script/release
+
+latest_tag=$(git describe --abbrev=0 --tags)
+
+goxc
+ghr -u shibayu36 -r shibayu36 $latest_tag dist/snapshot/
