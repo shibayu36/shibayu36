@@ -1,9 +1,10 @@
 GOLDFLAGS = -X main.Version=$$(git describe --tags HEAD)
 
 setup:
-	go get -v \
+	go get -v -u \
 		github.com/Masterminds/glide \
-		github.com/mitchellh/gox
+		github.com/laher/goxc \
+		github.com/tcnksm/ghr
 
 deps: setup
 	glide install
