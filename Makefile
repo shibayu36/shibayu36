@@ -1,16 +1,16 @@
 GOLDFLAGS = -X main.Version=$$(git describe --tags HEAD)
 
 setup:
-	go get -v -u \
-		github.com/Masterminds/glide \
+	go get -v \
+		github.com/golang/dep/cmd/dep \
 		github.com/laher/goxc \
 		github.com/tcnksm/ghr
 
 deps: setup
-	glide install
+	dep ensure
 
 test: deps
-	go test -v $$(glide novendor)
+	go test -v ./...
 
 xbuild: deps
 	gox \
