@@ -2,7 +2,9 @@
 
 set -e
 
-# Usage: GITHUB_TOKEN=... script/release
+# Usage:
+# $ script/release # Setting github.token in .gitconfig is required
+# $ GITHUB_TOKEN=... script/release
 
 latest_tag=$(git describe --abbrev=0 --tags)
 
